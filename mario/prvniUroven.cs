@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace mario
 {
@@ -20,6 +21,7 @@ namespace mario
         bool maKlic = false;
         int zivoty = 1;
         bool hit = false;
+
         public prvniUroven()
         {
             InitializeComponent();
@@ -124,7 +126,11 @@ namespace mario
                     {
                         this.Controls.Remove(objekt);
                         MessageBox.Show("Dokončil jsi úroveň :)");
+                        this.Visible = false;
                         this.Close();
+                        Score s = new Score(score);
+                        s.ShowDialog();
+                        
                     }
                 }
 

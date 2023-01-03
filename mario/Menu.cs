@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics;
 
 namespace mario
 {
@@ -33,6 +35,11 @@ namespace mario
         private void button4_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Process.Start("..\\score\\tabulka.txt");
         }
     }
 }
