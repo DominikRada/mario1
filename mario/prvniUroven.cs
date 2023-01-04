@@ -14,12 +14,14 @@ namespace mario
     {
         bool doleva, doprava, skok = false;
         int rychlostSkoku = 10;
-        int sila = 8;
+        int sila = 10;
         int rychlostHrace = 10;
         int score = 0;
         bool maKlic = false;
-        int zivoty = 1;
+        int zivoty = 3;
         bool hit = false;
+        bool smrt = false;
+        
         public prvniUroven()
         {
             InitializeComponent();
@@ -27,10 +29,19 @@ namespace mario
 
         private void timerEvent(object sender, EventArgs e)
         {
-
+            zivoty_label.Text = "Životy: " + zivoty;
+            score_label.Text = "Score: " + score;
             hrac.Top += rychlostSkoku;
             hrac.Refresh();
+            
+            if(!(hrac.Bounds.IntersectsWith(pozadi.Bounds)))
+            {
+                //******************************
+                hrac.Top = pictureBox1.Top - hrac.Height;
+                hrac.Left = 200;
+                zivoty--;
 
+            }
 
             if (score >= 100)
             {
@@ -39,22 +50,21 @@ namespace mario
                 zivoty_label.Text = "Životy: " + zivoty;
                 score_label.Text = "Score: " + score;
             }
-
-            /*if (hrac.Top < this.Bottom)
+            
+            
+            if (zivoty <= 0 && smrt == false)
             {
-                zivoty--;
-                
-                if (zivoty <= 0)
-                {
-                    MessageBox.Show("Umřels :(");
-                    Close();
-                }
-            }*/
+                smrt = true; 
+                MessageBox.Show("Bohužel umřels");
+                this.Close();
+                               
+            }
+           
 
             if (nepritel.Left >= pictureBox3.Left)
             {
                 nepritel.Left += -rychlostHrace;
-                nepritel.BringToFront();
+                
             }
             else
             {
@@ -69,7 +79,7 @@ namespace mario
             {
                 hrac.Left += rychlostHrace;
             }
-
+            //-------------------------------------
             if(skok == true)
             {
                 rychlostSkoku = -12;
@@ -79,26 +89,28 @@ namespace mario
             {
                 rychlostSkoku = 12;
             }
-            if (skok == true && sila < 0)
+            if (skok == true && sila <= 0)
             {
                 skok = false;
                 rychlostSkoku = 0;
             }
-
+            //-------------------------------------
             foreach(Control objekt in this.Controls)
             {
-                if(objekt is PictureBox && (string)objekt.Tag == "platforma")
+                if(!(objekt is PictureBox)) { continue; }
+
+                if((string)objekt.Tag == "platforma")
                 {
                     if(hrac.Bounds.IntersectsWith(objekt.Bounds) && skok == false)
                     {
-                        sila = 8;
+                        sila = 10;
                         hrac.Top = objekt.Top - hrac.Height;
                         rychlostSkoku = 0;
                     }
                     objekt.BringToFront(); 
                 }
 
-                if (objekt is PictureBox && (string)objekt.Tag == "mince")
+                else if ((string)objekt.Tag == "mince")
                 {
                     if (hrac.Bounds.IntersectsWith(objekt.Bounds))
                     {
@@ -108,7 +120,7 @@ namespace mario
                     }
                 }
 
-                if (objekt is PictureBox && (string)objekt.Tag == "klic")
+                else if ((string)objekt.Tag == "klic")
                 {
                     if (hrac.Bounds.IntersectsWith(objekt.Bounds))
                     {
@@ -118,7 +130,7 @@ namespace mario
                     }
                 }
 
-                if (objekt is PictureBox && (string)objekt.Tag == "dvere" && maKlic == true)
+                else if ((string)objekt.Tag == "dvere" && maKlic == true)
                 {
                     if (hrac.Bounds.IntersectsWith(objekt.Bounds))
                     {
@@ -128,25 +140,31 @@ namespace mario
                     }
                 }
 
-                if (objekt is PictureBox && (string)objekt.Tag == "nepritel" && hit == false)
+                else if (hrac.Bounds.IntersectsWith(objekt.Bounds) && (string)objekt.Tag == "nepritel" && hit == false)
                 {
-                    if (hrac.Bounds.IntersectsWith(objekt.Bounds))
-                    {
-                        hit = true;
-                        zivoty--;
-                        zivoty_label.Text = "Životy: " + zivoty;
-                    }
-                    
+                    zivoty--;
+                    zivoty_label.Text = "Životy: " + zivoty;
+                    hit = true;
                 }
-                hit = false;
+
+                else if (!hrac.Bounds.IntersectsWith(objekt.Bounds) && (string)objekt.Tag == "nepritel")
+                {
+                    hit = false;
+                }
+                
             }
 
 
         }
 
+        private void prvniUroven_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void KlavesaStisknuta(object sender, KeyEventArgs e)
         {
-           switch(e.KeyCode)
+            switch(e.KeyCode)
             {
                 case Keys.Left: doleva = true; break;
                 case Keys.Right: doprava = true; break;

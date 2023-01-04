@@ -463,6 +463,7 @@
             this.Name = "prvniUroven";
             this.Text = "Super Hra";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.prvniUroven_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KlavesaStisknuta);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KlavesaNahore);
             ((System.ComponentModel.ISupportInitialize)(this.pozadi)).EndInit();
