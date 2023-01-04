@@ -63,6 +63,7 @@
             this.pictureBox27 = new System.Windows.Forms.PictureBox();
             this.nepritel = new System.Windows.Forms.PictureBox();
             this.zivoty_label = new System.Windows.Forms.Label();
+            this.label_mince = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pozadi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -405,9 +406,9 @@
             // nepritel
             // 
             this.nepritel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.nepritel.Location = new System.Drawing.Point(1343, 549);
+            this.nepritel.Location = new System.Drawing.Point(1343, 561);
             this.nepritel.Name = "nepritel";
-            this.nepritel.Size = new System.Drawing.Size(41, 64);
+            this.nepritel.Size = new System.Drawing.Size(41, 52);
             this.nepritel.TabIndex = 37;
             this.nepritel.TabStop = false;
             this.nepritel.Tag = "nepritel";
@@ -423,11 +424,23 @@
             this.zivoty_label.TabIndex = 38;
             this.zivoty_label.Text = "Životy: 1";
             // 
+            // label_mince
+            // 
+            this.label_mince.AutoSize = true;
+            this.label_mince.BackColor = System.Drawing.Color.Transparent;
+            this.label_mince.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label_mince.Location = new System.Drawing.Point(313, 0);
+            this.label_mince.Name = "label_mince";
+            this.label_mince.Size = new System.Drawing.Size(116, 31);
+            this.label_mince.TabIndex = 39;
+            this.label_mince.Text = "Mince: 0";
+            // 
             // prvniUroven
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.Controls.Add(this.label_mince);
             this.Controls.Add(this.zivoty_label);
             this.Controls.Add(this.nepritel);
             this.Controls.Add(this.pictureBox27);
@@ -535,6 +548,7 @@
         private System.Windows.Forms.PictureBox pictureBox27;
         private System.Windows.Forms.PictureBox nepritel;
         private System.Windows.Forms.Label zivoty_label;
+        private System.Windows.Forms.Label label_mince;
     }
 }
 

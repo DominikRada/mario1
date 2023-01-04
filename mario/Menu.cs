@@ -24,7 +24,7 @@ namespace mario
             this.Visible = false;
             prvniUroven f2 = new prvniUroven();
             f2.ShowDialog();
-            this.Close();
+            //this.Close();
         }
 
         private void Menu_Load(object sender, EventArgs e)

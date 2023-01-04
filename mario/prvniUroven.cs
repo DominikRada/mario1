@@ -21,6 +21,8 @@ namespace mario
         bool maKlic = false;
         int zivoty = 1;
         bool hit = false;
+        bool pot = false;
+        int mince = 0;
 
         public prvniUroven()
         {
@@ -34,28 +36,48 @@ namespace mario
             hrac.Refresh();
 
 
-            if (score >= 100)
+            if(zivoty==0)
             {
-                score = 0;
+                if(pot == false)
+                {
+                    pot = true;
+                    DialogResult odpoved = MessageBox.Show("Bohužel jsi umřel :(");
+                    
+                    if(odpoved==DialogResult.OK)
+                    { 
+                        timer1.Stop();
+                        Menu f2 = new Menu();
+                        f2.Show();
+                        this.Close();
+                    }
+                }
+                
+
+
+                
+            }
+
+            if (mince == 5)
+            {
+                mince = 0;
                 zivoty++;
+                label_mince.Text = "Mince: " + mince;
                 zivoty_label.Text = "Životy: " + zivoty;
                 score_label.Text = "Score: " + score;
             }
 
-            /*if (hrac.Top < this.Bottom)
+            if(!(hrac.Bounds.IntersectsWith(pozadi.Bounds)))
             {
+                //******************************
+                hrac.Top = pictureBox1.Top - hrac.Height;
+                hrac.Left = 200;
                 zivoty--;
-                
-                if (zivoty <= 0)
-                {
-                    MessageBox.Show("Umřels :(");
-                    Close();
-                }
-            }*/
+                zivoty_label.Text = "Životy: " + zivoty;
+            }
 
             if (nepritel.Left >= pictureBox3.Left)
             {
-                nepritel.Left += -rychlostHrace;
+                nepritel.Left += -rychlostHrace/2;
                 nepritel.BringToFront();
             }
             else
@@ -104,9 +126,12 @@ namespace mario
                 {
                     if (hrac.Bounds.IntersectsWith(objekt.Bounds))
                     {
+                        
                         this.Controls.Remove(objekt);
+                        mince++;
                         score+=20;
                         score_label.Text = "Score: " + score;
+                        label_mince.Text = "Mince: " + mince;
                     }
                 }
 
@@ -134,17 +159,17 @@ namespace mario
                     }
                 }
 
-                if (objekt is PictureBox && (string)objekt.Tag == "nepritel" && hit == false)
+                else if (hrac.Bounds.IntersectsWith(objekt.Bounds) && (string)objekt.Tag == "nepritel" && hit == false)
                 {
-                    if (hrac.Bounds.IntersectsWith(objekt.Bounds))
-                    {
-                        hit = true;
-                        zivoty--;
-                        zivoty_label.Text = "Životy: " + zivoty;
-                    }
-                    
+                    zivoty--;
+                    zivoty_label.Text = "Životy: " + zivoty;
+                    hit = true;
                 }
-                hit = false;
+
+                else if (!hrac.Bounds.IntersectsWith(objekt.Bounds) && (string)objekt.Tag == "nepritel")
+                {
+                    hit = false;
+                }
             }
 
 
@@ -160,7 +185,6 @@ namespace mario
                     if (skok == false)
                     {
                         skok = true;
-                        //MessageBox.Show("skok");
                         break;
                     }
                     break;
